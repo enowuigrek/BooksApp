@@ -56,4 +56,15 @@ dataSource.books = [
       nonFiction: false
     }
   },
+  {
+    id: 6,
+    name: 'Jak warzyć piwo',
+    image: 'images/books/6.jpg',
+    rating: 9.4,
+    price: 40,
+    details: {
+      adults: false,
+      nonFiction: true
+    }
+  },
 ];
