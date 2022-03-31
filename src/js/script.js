@@ -27,7 +27,7 @@
 
       thisBooksList.initData();
       thisBooksList.render();
-      thisBooksList.getElemets();
+      thisBooksList.getElements();
       thisBooksList.initActions();
     }
 
@@ -38,7 +38,7 @@
       thisBooksList.filters = [];
     }
 
-    getElemets(){
+    getElements(){
       const thisBooksList = this;
 
       thisBooksList.dom = {};
@@ -51,11 +51,8 @@
       const thisBooksList = this;
 
       for(let book of dataSource.books){
-        const ratingBgc = thisBooksList.determineRatingBgc(book.rating);
-        book.ratingBgc = ratingBgc;
-
-        const ratingWidth = book.rating * 10;
-        book.ratingWidth = ratingWidth;
+        book.ratingBgc = thisBooksList.determineRatingBgc(book.rating);
+        book.ratingWidth = book.rating * 10;
 
         const generatedHTML = templates.templateBook(book);
         const generatedDOM = utils.createDOMFromHTML(generatedHTML);
@@ -136,6 +133,6 @@
       }
     }
   }
+  
   new BooksList();
-
 }
