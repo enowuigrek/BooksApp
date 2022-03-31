@@ -8,7 +8,8 @@
     books: {
       booksList: '.books-list',
       bookImage: '.book__image',
-      dataId: 'data-id'
+      dataId: 'data-id',
+      filters: '.filters',
     },
 
     templateOf: {
@@ -19,6 +20,23 @@
   const templates = {
     templateBook: Handlebars.compile(document.querySelector(select.templateOf.templateBook).innerHTML),
   };
+  console.log(templates);
+
+
+  
+
+  const favoriteBooks = [];
+  const filters = [];
+
+  function getElemets(){
+
+    const thisBook = this;
+
+    thisBook.dom = {};
+
+    thisBook.dom.booksList = document.querySelector(select.books.booksList);
+    thisBook.dom.filters = document.querySelector(select.books.filters);
+  }
 
   function render(){
     const allBooks = dataSource.books;
@@ -32,13 +50,10 @@
     }
   }
 
-  const favoriteBooks = [];
-
   function initActions(){
-    const booksList = document.querySelector(select.books.booksList);
+    const thisBook = this;
 
-   
-    booksList.addEventListener('dblclick', function(event){
+    thisBook.dom.booksList.addEventListener('dblclick', function(event){
       event.preventDefault();
 
       const clickedElement = event.target.offsetParent;
@@ -49,17 +64,32 @@
         clickedElement.classList.remove('favorite');
         favoriteBooks.splice(bookIndex,1);
 
-      } else {
+      } else{
         clickedElement.classList.add('favorite');
         favoriteBooks.push(dataId);
       }
+    });
 
-      console.log(clickedElement);
-      console.log(booksList);
-      console.log(favoriteBooks);
+    thisBook.dom.filters.addEventListener('click', function(event){
+
+      const clickedElement = event.target;
+      const clickedFilter = clickedElement.value;
+      
+      if(clickedElement.tagName == 'INPUT' && clickedElement.type == 'checkbox'&& clickedElement.name == 'filter'){
+        const filterIndex = filters.indexOf(clickedFilter);
+
+        if(clickedElement.checked){
+          filters.push(clickedFilter);
+        } else {
+          filters.splice(filterIndex ,1);
+        }
+      }
+      
+      console.log(filters);
     });
   }
 
   render();
+  getElemets();
   initActions();
 }
