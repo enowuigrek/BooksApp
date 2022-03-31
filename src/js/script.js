@@ -33,33 +33,31 @@
   }
 
   const favoriteBooks = [];
-  
 
   function initActions(){
-    const booksList = document.querySelectorAll(select.books.bookImage);
+    const booksList = document.querySelector(select.books.booksList);
 
-    for(const clickedBook of booksList){
-            
-      clickedBook.addEventListener('dblclick', function(event){
-        event.preventDefault();
+   
+    booksList.addEventListener('dblclick', function(event){
+      event.preventDefault();
 
-        const dataId = clickedBook.getAttribute(select.books.dataId);
+      const clickedElement = event.target.offsetParent;
+      const dataId = clickedElement.getAttribute(select.books.dataId);
+      const bookIndex = favoriteBooks.indexOf(dataId);
 
-        if (clickedBook.classList.contains('favorite')){
-          const bookIndex = favoriteBooks.indexOf(dataId);
+      if (clickedElement.classList.contains('favorite')){
+        clickedElement.classList.remove('favorite');
+        favoriteBooks.splice(bookIndex,1);
 
-          clickedBook.classList.remove('favorite');
+      } else {
+        clickedElement.classList.add('favorite');
+        favoriteBooks.push(dataId);
+      }
 
-          favoriteBooks.splice(bookIndex,1);
-          
-        } else {
-          clickedBook.classList.add('favorite');
-
-          favoriteBooks.push(dataId);
-        }
-        console.log(favoriteBooks);
-      });
-    }
+      console.log(clickedElement);
+      console.log(booksList);
+      console.log(favoriteBooks);
+    });
   }
 
   render();
